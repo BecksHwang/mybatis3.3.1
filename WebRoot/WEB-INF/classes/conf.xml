@@ -52,7 +52,7 @@
 			<!-- 配置数据库连接信息 -->
 			<dataSource type="POOLED">
 				<property name="driver" value="com.mysql.jdbc.Driver" />
-				<property name="url" value="jdbc:mysql://localhost:3306/mybatis" />
+				<property name="url" value="jdbc:mysql://localhost:3306/mybatis?useUnicode=true&amp;characterEncoding=utf8" />
 				<property name="username" value="root" />
 				<property name="password" value="root" />
 				<property name="poolPingQuery" value="SELECT id FROM user WHERE id = 1" />
@@ -65,6 +65,8 @@
         <!-- 注册userMapper.xml文件，告诉mybatis去那里寻找映射文件
         userMapper.xml位于com.becks.mapping这个包下，所以resource写成com/becks/mapping/userMapper.xml -->
         <mapper resource="com/becks/mapping/userMapper.xml"/>
+        <!-- 注册userMapper映射接口-->
+        <mapper class="com.becks.mapping.UserMapperI"/>
     </mappers>
     
 </configuration>

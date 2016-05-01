@@ -9,7 +9,6 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
 import com.becks.entity.User;
-import com.becks.mapping.userMapper;
 
 
 
@@ -52,7 +51,7 @@ public class Test {
          * 不适用于复杂的sql语句
          */  
 //        try {
-//          UserMapper mapper = session.getMapper(UserMapper.class);
+//          userMapper mapper = session.getMapper(userMapper.class);
 //          User user = mapper.selectUser(1);
 //          System.out.println(user);
 //        } finally {

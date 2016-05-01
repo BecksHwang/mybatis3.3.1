@@ -2,7 +2,6 @@ package com.becks.test;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Iterator;
 import java.util.List;
 
 import org.apache.ibatis.io.Resources;
@@ -10,7 +9,6 @@ import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.becks.entity.User;
@@ -58,7 +56,7 @@ public class TestMybatis {
         	String statement = "com.becks.mapping.userMapper.insertUser";//映射sql的标识字符串
         	//新建user对象用于sql插入
         	User u = new User();
-        	u.setName("乔巴");
+        	u.setName("罗宾");
         	u.setAge(15);
         	int result = session.insert(statement, u);
         	System.out.println(result);
@@ -74,7 +72,7 @@ public class TestMybatis {
 		try{
         	String statement = "com.becks.mapping.userMapper.deleteUser";//映射sql的标识字符串
         	//执行删除一个user对象的sql
-        	int result = session.delete(statement, 15);
+        	int result = session.delete(statement, 7);
         	System.out.println(result);
         	session.commit();
         } finally {
@@ -88,9 +86,9 @@ public class TestMybatis {
 		try{
         	String statement = "com.becks.mapping.userMapper.updateUser";//映射sql的标识字符串
         	User u = new User();
-        	u.setId(17);
-        	u.setName("乔巴");
-        	u.setAge(12);
+        	u.setId(2);
+        	u.setName("乌索普");
+        	u.setAge(18);
         	//执行更新user对象的sql
         	int result = session.update(statement, u);
         	System.out.println(result);
@@ -110,7 +108,6 @@ public class TestMybatis {
         	for (User user : result) {
 				System.out.println(user);
 			}
-        	session.commit();
         } finally {
         	session.close();
         }
