@@ -1,8 +1,8 @@
 package com.becks.entity;
 
 /**
- * @author gacl
- * users表所对应的实体类
+ * @author BecksHwang
+ * user表所对应的实体类
  */
 public class User {
 
