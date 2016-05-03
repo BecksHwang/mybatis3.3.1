@@ -25,7 +25,7 @@
 		select * from blog where blog_id=#{id}
 	</select>
 
-	<!--通过<resultMap>映射实体类属性名和表的字段名对应关系 -->
+	<!-- 通过<resultMap>映射实体类属性名和表的字段名对应关系 -->
 	<resultMap type="Blog" id="blogResultMap">
 		<!-- 用id属性来映射主键字段 -->
 		<id property="id" column="blog_id"/>
@@ -33,4 +33,61 @@
 		<result property="name" column="blog_name"/>
 		<result property="userId" column="user_id"/>
 	</resultMap>
+	
+	<!-- 根据博客id去查询博客，并带出博客对应的用户信息
+		 方法一：联表查询
+		 select * from blog b,user u where b.user_id=u.id and b.blog_id=1;
+		 
+		 方法二：执行两次查询
+		 select * from blog where blog_id=1; //对应user_id=1
+		 select * from user where id=1;
+	 -->
+	 
+	 <!-- 方法一：嵌套结果：使用嵌套结果映射来处理重复的联合结果的子集
+          封装联表查询的数据(去除重复的数据) 
+	 	  select * from blog b,user u where b.user_id=u.id and b.blog_id=1;
+	  -->
+	 <select id="getBlog" parameterType="int" resultMap="blogResultMap2">
+	 	select * from blog b,user u where b.user_id=u.id and b.blog_id=#{id}
+	 </select>
+	 
+	 <resultMap type="Blog" id="blogResultMap2">
+	 	<id property="id" column="blog_id"/>
+	 	<result property="name" column="blog_name"/>
+	 	<result property="userId" column="user_id"/>
+	 	<association property="user" javaType="User">
+	 		<id property="id" column="id"/>
+	 		<result property="name" column="name"/>
+	 		<result property="age" column="age"/>
+	 	</association>
+	 </resultMap>
+	 
+	 <!-- 方法二：嵌套查询：通过执行另外一个SQL映射语句来返回预期的复杂类型
+	 	  select * from blog where blog_id=1; //对应user_id=1
+		  select * from user where id=1; 
+	  -->
+	  <select id="getBlog2" parameterType="int" resultMap="blogResultMap3">
+	  	select * from blog where blog_id=#{id};
+	  </select>
+	 <!-- 使用resultMap映射实体类和字段之间的一一对应关系 -->
+	  <resultMap type="Blog" id="blogResultMap3">
+	  	<id property="id" column="blog_id"/>
+	 	<result property="name" column="blog_name"/>
+	 	<result property="userId" column="user_id"/>
+	 	<association property="user" column="user_id" select="getUser"></association>
+	  </resultMap>
+	 
+	  <select id="getUser" parameterType="int" resultType="User">
+	  	select * from user where id=#{id}
+	  </select>
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
 </mapper>

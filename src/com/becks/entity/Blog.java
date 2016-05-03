@@ -11,6 +11,11 @@ public class Blog {
 	private String name;//name ==> blog_name
 	
 	private int userId;//userId ==> user_id
+	/**
+	 * blog表中有一个userId字段，表示一个博客对应一个用户
+	 * 所以定义一个user字段，用于维护blog和user之间的一对一关系
+	 */	
+	private User user;
 
 	public int getId() {
 		return id;
@@ -36,9 +41,17 @@ public class Blog {
 		this.userId = userId;
 	}
 
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
 	@Override
 	public String toString() {
-		return "Blog [id=" + id + ", name=" + name + ", userId=" + userId + "]";
+		return "Blog [id=" + id + ", name=" + name + ", userId=" + userId + ", user=" + user + "]";
 	}
 
 }
