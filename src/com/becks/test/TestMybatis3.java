@@ -105,5 +105,48 @@ public class TestMybatis3 {
 			session.close();
 		}
 	}
+	
+	@Test
+	public void testSelectBlogAll1() {
+		System.out.println("＊＊＊＊＊＊测试testSelectBlogAll1＊＊＊＊＊＊");
+		try {
+			String statement = "com.becks.mapping.blogMapper.getBlog3";// 映射sql的标识字符串
+			// 执行查询一个blog对象的sql，并带回其对应的user
+			Blog blog = session.selectOne(statement, 3);
+			if (blog == null) {
+				System.out.println("查不到对象，返回对象为空");
+			} else {
+				System.out.println(blog);
+				/*查询结果：Blog [id=3, name=索隆的博客, userId=4, user=User [id=4, name=索隆, age=18],
+				 *  articles=[Article [id=4, title=索隆的文章1, blogId=3],
+				 *  Article [id=5, title=索隆的文章2, blogId=3], 
+				 *  Article [id=6, title=索隆的文章3, blogId=3]]]
+				 *  */
+			}
+		} finally {
+			session.close();
+		}
+	}
 
+	@Test
+	public void testSelectBlogAll2() {
+		System.out.println("＊＊＊＊＊＊测试testSelectBlogAll2＊＊＊＊＊＊");
+		try {
+			String statement = "com.becks.mapping.blogMapper.getBlog4";// 映射sql的标识字符串
+			// 执行查询一个blog对象的sql，并带回其对应的user
+			Blog blog = session.selectOne(statement, 3);
+			if (blog == null) {
+				System.out.println("查不到对象，返回对象为空");
+			} else {
+				System.out.println(blog);
+				/*查询结果：Blog [id=3, name=索隆的博客, userId=4, user=User [id=4, name=索隆, age=18],
+				 *  articles=[Article [id=4, title=索隆的文章1, blogId=3],
+				 *  Article [id=5, title=索隆的文章2, blogId=3], 
+				 *  Article [id=6, title=索隆的文章3, blogId=3]]]
+				 *  */
+			}
+		} finally {
+			session.close();
+		}
+	}
 }

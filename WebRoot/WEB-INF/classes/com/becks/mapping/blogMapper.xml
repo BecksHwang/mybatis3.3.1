@@ -81,10 +81,56 @@
 	  	select * from user where id=#{id}
 	  </select>
 	 
+	 <!-- 根据id去查询博客信息，并带出博客的用户信息以及博客的文章信息 -->
 	 
+	 <!-- 方法一：使用嵌套结果映射来处理重复的联合结果的子集
+	 	  select * from blog b,user u,article a where b.user_id=u.id and b.blog_id=a.blog_id and b.blog_id=3
+	  -->
+	 <select id="getBlog3" parameterType="int" resultMap="blogResultMap4">
+	 	select * from blog b,user u,article a where b.user_id=u.id and b.blog_id=a.blog_id and b.blog_id=#{id}
+	 </select>
 	 
+	 <resultMap type="Blog" id="blogResultMap4">
+	 	<id property="id" column="blog_id"/>
+	 	<result property="name" column="blog_name"/>
+	 	<result property="userId" column="user_id"/>
+	 	<association property="user" javaType="User">
+	 		<id property="id" column="id"/>
+	 		<result property="name" column="name"/>
+	 		<result property="age" column="age"/>
+	 	</association>
+	 	<!-- ofType指定article集合中的对象类型 -->
+	 	<collection property="articles" ofType="Article">
+	 		<id property="id" column="article_id"/>
+	 		<result property="title" column="title"/>
+	 		<result property="blogId" column="blog_id"/>
+	 	</collection>
+	 </resultMap>
 	 
+	 <!-- 方法二：通过执行另外一个SQL映射语句来返回预期的复杂类型
+	 	  select * from blog where blog_id=3 //对应user_id:4
+	 	  select * from user where id=4 
+	 	  select * from article where blog_id=3//对应blog的blog_id:3
+	  -->
+	 <select id="getBlog4" parameterType="int" resultMap="blogResultMap5">
+	 	select * from blog where blog_id=#{id}
+	 </select>
 	 
+	 <resultMap type="Blog" id="blogResultMap5">
+	 	<id property="id" column="blog_id"/>
+	 	<result property="name" column="blog_name"/>
+	 	<result property="userId" column="user_id"/>
+	 	<association property="user" column="user_id" javaType="User" select="getUser2"></association>
+	 	<collection property="articles" column="blog_id" ofType="Article" select="getArticle"></collection>
+	 </resultMap>
+	 
+	 <select id="getUser2" parameterType="int" resultType="User">
+	 	select * from user where id=#{id}
+	 </select>
+	 
+	 <select id="getArticle" parameterType="int" resultType="Article">
+	 	select article_id id,title title,blog_id blogId from article where blog_id=#{id}
+	 </select>
 	 
 	 
 	 

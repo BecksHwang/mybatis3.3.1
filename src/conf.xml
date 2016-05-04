@@ -45,6 +45,7 @@
 	<typeAliases>
 		<typeAlias alias="User" type="com.becks.entity.User" />
 		<typeAlias alias="Blog" type="com.becks.entity.Blog" />
+		<typeAlias alias="Article" type="com.becks.entity.Article" />
 		<!-- 每一个在包 com.becks.entity 中的 Java Bean，在没有注解的情况下，会使用 Bean 的首字母小写的非限定类名来作为它的别名。 比如 com.becks.entity.User 的别名为 user；若有注解，则别名为其注解值。 -->
 		<!-- <package name="com.becks.entity"/> -->
 	</typeAliases>
