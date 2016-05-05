@@ -1,6 +1,8 @@
 package com.becks.test;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.junit.Before;
@@ -145,6 +147,22 @@ public class TestMybatis3 {
 				 *  Article [id=6, title=索隆的文章3, blogId=3]]]
 				 *  */
 			}
+		} finally {
+			session.close();
+		}
+	}
+	
+	@Test
+	public void testGetArticleCount() {
+		System.out.println("＊＊＊＊＊＊测试testGetArticleCount＊＊＊＊＊＊");
+		try {
+			String statement = "com.becks.mapping.blogMapper.getArticleCount";// 映射sql的标识字符串
+			Map<String, Integer> parameterMap = new HashMap<String, Integer>();
+			parameterMap.put("blogId", 3);
+			parameterMap.put("article_count", -1);
+			session.selectOne(statement, parameterMap);
+			Integer result = parameterMap.get("article_count");
+			System.out.println(result);
 		} finally {
 			session.close();
 		}

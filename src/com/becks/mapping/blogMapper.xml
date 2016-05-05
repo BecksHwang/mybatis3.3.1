@@ -132,8 +132,15 @@
 	 	select article_id id,title title,blog_id blogId from article where blog_id=#{id}
 	 </select>
 	 
+	 <!-- 调用存储过程get_article_count，根据博客ID查询博客下对应文章数量 -->
+	 <select id="getArticleCount" parameterMap="getArticleCountMap" statementType="CALLABLE">
+	 	CALL get_article_count(?,?)
+	 </select>
 	 
-	 
+	 <parameterMap type="java.util.Map" id="getArticleCountMap">
+	 	<parameter property="blogId" mode="IN" jdbcType="INTEGER"/>
+	 	<parameter property="article_count" mode="OUT" jdbcType="INTEGER"/>
+	 </parameterMap>
 	 
 	 
 </mapper>
